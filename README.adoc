@@ -1,0 +1,1 @@
+= Spring Cloud Stream File Source Kafka Binder Application
