@@ -21,7 +21,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.iberdrola.dtp.scdf.file"})
 @Import({org.springframework.cloud.fn.supplier.file.FileSupplierConfiguration.class})
 public class FileSourceKafkaApplication {
 
