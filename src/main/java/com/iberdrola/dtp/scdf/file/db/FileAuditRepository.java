@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 @ConditionalOnProperty(value = "file.audit", havingValue = "true", matchIfMissing = true)
 public interface FileAuditRepository extends CrudRepository<FileAudit, Integer> {
 
-  default FileAudit auditStartup(final String appName) {
-    return audit(appName, AuditType.STARTUP, null);
+  default FileAudit auditStartup(final String appName, final String details) {
+    return audit(appName, AuditType.STARTUP, details);
   }
 
   default FileAudit audit(final String appName, final AuditType auditType, final String details) {

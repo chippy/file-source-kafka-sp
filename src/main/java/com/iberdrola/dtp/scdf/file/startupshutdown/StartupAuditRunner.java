@@ -1,6 +1,8 @@
 package com.iberdrola.dtp.scdf.file.startupshutdown;
 
 import com.iberdrola.dtp.scdf.file.db.FileAuditRepository;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -17,7 +19,16 @@ public class StartupAuditRunner implements CommandLineRunner {
 
   @Override
   public void run(final String... args) throws Exception {
-    log.error("HI I'M THE COMMAND LINE RUNNER");
-    repo.auditStartup("file");
+    repo.auditStartup("file", String.format("Startup on %s", getHost()));
+  }
+
+  private String getHost() {
+    try {
+      final InetAddress localHost = InetAddress.getLocalHost();
+      return String.format("%s (%s)", localHost.getHostAddress(), localHost.getHostName());
+    } catch (final UnknownHostException exception) {
+      log.error("Unable to determine host: {}", exception.getMessage(), exception);
+      return "<unknown>";
+    }
   }
 }
