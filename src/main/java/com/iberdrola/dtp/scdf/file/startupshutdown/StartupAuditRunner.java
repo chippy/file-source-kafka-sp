@@ -16,10 +16,11 @@ import org.springframework.stereotype.Component;
 public class StartupAuditRunner implements CommandLineRunner {
 
   private final FileAuditRepository repo;
+  private final AppVerifier verifier;
 
   @Override
   public void run(final String... args) throws Exception {
-    repo.auditStartup("file", String.format("Startup on %s", getHost()));
+    repo.auditStartup(verifier.getAppName(), String.format("Startup on %s", getHost()));
   }
 
   private String getHost() {
