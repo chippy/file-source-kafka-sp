@@ -18,6 +18,18 @@ public class StartupAuditRunner implements CommandLineRunner {
 
   @Override
   public void run(final String... args) throws Exception {
+    auditStartup();
+    registerShutdownHook();
+  }
+
+  private void auditStartup() {
     repo.auditStartup(runtimeInfo.getAppName(), String.format("Startup on %s", runtimeInfo.getHost()));
+  }
+
+  private void registerShutdownHook() {
+    final ShutdownAuditHook shutdownHook = new ShutdownAuditHook(repo, runtimeInfo);
+    log.info("Registering shutdown hook: {}", shutdownHook.getName());
+    Runtime.getRuntime()
+           .addShutdownHook(shutdownHook);
   }
 }

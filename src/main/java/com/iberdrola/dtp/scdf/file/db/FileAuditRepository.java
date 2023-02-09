@@ -12,6 +12,10 @@ public interface FileAuditRepository extends CrudRepository<FileAudit, Integer> 
     return audit(appName, AuditType.STARTUP, details);
   }
 
+  default FileAudit auditShutdown(final String appName, final String details) {
+    return audit(appName, AuditType.SHUTDOWN, details);
+  }
+
   default FileAudit audit(final String appName, final AuditType auditType, final String details) {
     final FileAudit audit = FileAudit.builder()
                                      .app(appName)
