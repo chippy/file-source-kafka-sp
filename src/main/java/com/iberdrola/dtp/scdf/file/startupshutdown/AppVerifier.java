@@ -23,7 +23,7 @@ public class AppVerifier implements CommandLineRunner {
       + " for audit records. Please set \"metadata.store.jdbc.region\"";
   private final MetadataStore metadataStore;
   private final MetadataStoreProperties metadataStoreProperties;
-  private String appName;
+  private final RuntimeInfo runtimeInfo;
 
   @Override
   public void run(final String... args) throws Exception {
@@ -36,18 +36,10 @@ public class AppVerifier implements CommandLineRunner {
     if (metadataStoreProperties.getJdbc() == null) {
       throw new IllegalStateException(METADATA_STORE_PROPERTIES_MISSING);
     }
-    if (StringUtils.isBlank(getAppName())) {
+    if (StringUtils.isBlank(runtimeInfo.getAppName())) {
       throw new IllegalStateException(APP_NAME_VIA_REGION_MISSING);
     }
-    
-    log.info("Starting File application with app audit name of \"{}\"", appName);
-  }
 
-  public String getAppName() {
-    if (appName == null) {
-      appName = metadataStoreProperties.getJdbc()
-                                       .getRegion();
-    }
-    return appName;
+    log.info("Starting File application with app audit name of \"{}\"", runtimeInfo.getAppName());
   }
 }
